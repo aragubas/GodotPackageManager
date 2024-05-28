@@ -63,21 +63,37 @@ def add_package(path: str, package: Package):
     write_packages(path, packed_packages)
 
 
-def remove_package(path: str, package: Package):
-    pass
+def remove_package(path: str, package_id: str):
+    packed_packages = get_packages(path)
+
+    i = 0
+    package_found = False
+    for package in packed_packages:
+        if package.id == package_id:
+            package_found = True
+            break
+        i += 1
+    
+    if not package_found:
+        raise FileNotFoundError("Could not find package with ID '%s'." % package_id)
+
+    packed_packages.pop(i)
+
+    write_packages(path, packed_packages)
 
 
 if __name__ == "__main__":
     path = "./packages.json"
+
+    # TEST: Add test package
+    newPackage = Package("2604", "Post Process", "0.1.0")
+    add_package(path, newPackage)
+    
+    # TEST: Remove test package
+    #remove_package(path, "2604")
 
     print("Packages in packages.json:")    
     for package in get_packages(path):
         print("'%s'" % package.name)
         print("  ID: '%s'" % package.id)
         print("  Version: '%s'" % package.version)
-
-    # TEST: Add test package
-    #newPackage = Package("2604", "Post Process", "0.1.0")
-    #add_package(path, newPackage)
-
-    
