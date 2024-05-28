@@ -1,11 +1,10 @@
 {
-  "example package": {
-    "url": "https://github.com/sinas/ceira"
+  "2130": {
+    "name": "Asset Drawer",
+    "version": "1.1.4"
   },
-  "second package": {
-    "url": "https://github.com/caldo"
-  },
-  "third package": {
-    "url": "https://github.com/caldo enceirasticos"
+  "2700": {
+    "name": "TerraBrush",
+    "version": "0.7.0Alpha"
   }
 }

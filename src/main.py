@@ -3,17 +3,22 @@ from io import StringIO
 from json import JSONEncoder
 
 class Package:
-    url = ""
+    id = ""
     name = ""
+    version = "0.0.0"
 
-    def __init__(self, url, name):
-        self.url = url
+    def __init__(self, id, name, version):
+        self.id = id
         self.name = name
+        self.version = version
 
 
 class PackageEncoder(JSONEncoder):
     def default(self, object):
-        return { object.name: { "url": object.url } }
+        if object is Package:        
+            return { object.id: { "name": object.name, "version": object.version } }
+        
+        return super().default(object)
 
 
 def get_packages(path: str) -> list[Package]:
@@ -23,11 +28,8 @@ def get_packages(path: str) -> list[Package]:
     packagesJson = json.load(StringIO(packageFile))
     packages = list()
     
-    print("packages type")
-    print(type(packagesJson))
-
     for key, value in packagesJson.items():
-        package = Package(value["url"], key)
+        package = Package(key, value["name"], value["version"])
         packages.append(package)
 
     return packages
@@ -38,7 +40,7 @@ def write_packages(path: str, packages: list[Package]):
     dataToSerialize = { }
 
     for package in packages:
-        dataToSerialize[package.name] = { "url": package.url }
+        dataToSerialize[package.id] = { "name": package.name, "version": package.version }
 
     fileData = json.dumps(dataToSerialize, sort_keys=True, cls=PackageEncoder, indent=2)
 
@@ -52,7 +54,7 @@ def add_package(path: str, package: Package):
     # Check if package with same name or url exists
     for packed in packed_packages:
         # Found similar package, stop
-        if packed.name == package.name or packed.url == package.url:
+        if packed.id == package.id:
             raise FileExistsError("Package \"%s\" already exists" % packed.name)
     
     # No similar package found
@@ -73,7 +75,7 @@ if __name__ == "__main__":
         print(package.name)
 
     # TEST: Add test package
-    #newPackage = Package("https://github.com/caldo enceirasticos", "third package")
-    #add_package(path, newPackage)
+    newPackage = Package("2604", "Post Process", "0.1.0")
+    add_package(path, newPackage)
 
     
