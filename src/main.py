@@ -1,25 +1,6 @@
 import json
 from io import StringIO
-from json import JSONEncoder
-
-class Package:
-    id = ""
-    name = ""
-    version = "0.0.0"
-
-    def __init__(self, id, name, version):
-        self.id = id
-        self.name = name
-        self.version = version
-
-
-class PackageEncoder(JSONEncoder):
-    def default(self, object):
-        if object is Package:        
-            return { object.id: { "name": object.name, "version": object.version } }
-        
-        return super().default(object)
-
+from Package import Package, PackageEncoder
 
 def get_packages(path: str) -> list[Package]:
     with open(path) as file:
@@ -86,8 +67,8 @@ if __name__ == "__main__":
     path = "./packages.json"
 
     # TEST: Add test package
-    newPackage = Package("2604", "Post Process", "0.1.0")
-    add_package(path, newPackage)
+    #newPackage = Package("2604", "Post Process", "0.1.0")
+    #add_package(path, newPackage)
     
     # TEST: Remove test package
     #remove_package(path, "2604")
