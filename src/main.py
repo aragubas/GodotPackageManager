@@ -72,10 +72,12 @@ if __name__ == "__main__":
 
     print("Packages in packages.json:")    
     for package in get_packages(path):
-        print(package.name)
+        print("'%s'" % package.name)
+        print("  ID: '%s'" % package.id)
+        print("  Version: '%s'" % package.version)
 
     # TEST: Add test package
-    newPackage = Package("2604", "Post Process", "0.1.0")
-    add_package(path, newPackage)
+    #newPackage = Package("2604", "Post Process", "0.1.0")
+    #add_package(path, newPackage)
 
     
