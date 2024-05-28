@@ -1,0 +1,11 @@
+{
+  "example package": {
+    "url": "https://github.com/sinas/ceira"
+  },
+  "second package": {
+    "url": "https://github.com/caldo"
+  },
+  "third package": {
+    "url": "https://github.com/caldo enceirasticos"
+  }
+}
